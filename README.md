@@ -117,9 +117,12 @@ Create Category (Admin) → POST /core/categories/
 Update Category (Admin) → PATCH /core/categories/{id}/
 Delete Category (Admin) → DELETE /core/categories/{id}/
 List Products → GET /core/products/
+List Single Product →  Get /core/products/{id}
 Create Product (Admin) → POST /core/products/
 Update Product (Admin) → PATCH /core/products/{id}/
 Delete Product (Admin) → DELETE /core/products/{id}/
+Filter Products by Category → GET /core/products/?category={category_id}
+Filter products by name/description → GET /core/products/?search={product_name}
 
 🛒 Shopping Cart
 View Cart → GET /core/cart/
@@ -144,6 +147,11 @@ Add Review → POST /core/products/{product_id}/reviews/
 View All Users → GET /core/users/
 Block User → PATCH /core/users/{user_id}/block/
 Delete User → DELETE /core/users/{user_id}/delete/
+
+
+👥 User Management (Users)
+View User Profile → GET /auth/profile/
+Update User Profile → PUT /auth/profile/update/
 
 🔑 Authentication & Security
 Uses JWT for authentication (access and refresh tokens).
