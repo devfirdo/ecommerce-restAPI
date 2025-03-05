@@ -2,7 +2,7 @@ from django.urls import path
 from .views import category_list_create, category_detail, product_list_create, product_detail
 from .views import cart_list_create, cart_detail, place_order, order_detail, order_list
 from .views import track_order_status, update_order_status, list_all_orders, cancel_order
-from .views import list_users, block_user, delete_user, product_reviews
+from .views import list_users, block_user, unblock_user, delete_user, product_reviews
 
 urlpatterns = [
     # Categories
@@ -31,6 +31,7 @@ urlpatterns = [
     #Admin Users List
     path('users/', list_users, name='list-users'),
     path('users/<int:user_id>/block/', block_user, name='block-user'),
+    path('users/<int:user_id>/unblock/', unblock_user, name='unblock-user'),
     path('users/<int:user_id>/delete/', delete_user, name='delete-user'),
 
     #User Reviews

@@ -346,6 +346,25 @@ def block_user(request, user_id):
     return Response({"message": "User blocked successfully"}, status=status.HTTP_200_OK)
 
 
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def unblock_user(request, user_id):
+    """Admin can unblock (reactivate) a user"""
+    if not request.user.is_staff:
+        return Response({"error": "Only admins can unblock users"}, status=status.HTTP_403_FORBIDDEN)
+
+    user = get_object_or_404(User, id=user_id)
+
+    if user.is_active:
+        return Response({"message": "User is already active"}, status=status.HTTP_400_BAD_REQUEST)
+
+    user.is_active = True  # Reactivate user
+    user.save()
+    return Response({"message": "User unblocked successfully"}, status=status.HTTP_200_OK)
+
+
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_user(request, user_id):

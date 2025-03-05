@@ -1240,7 +1240,7 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/core/users/8/block/",
+							"raw": "http://127.0.0.1:8000/api/v1/core/users/3/block/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -1254,8 +1254,46 @@
 								"v1",
 								"core",
 								"users",
-								"8",
+								"3",
 								"block",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/core/users/3/unblock/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"core",
+								"users",
+								"3",
+								"unblock",
 								""
 							]
 						}
