@@ -1,8 +1,12 @@
 from django.contrib.auth import authenticate
+
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
+
+
 from core.models import User
 from api.v1.auth.serializers import UserSerializer
 
@@ -59,18 +63,15 @@ def update_user_profile(request):
 @permission_classes([IsAuthenticated])
 def logout_user(request):
     try:
-        refresh_token = request.data.get("refresh")  # Ensure you get the refresh token
+        refresh_token = request.data.get("refresh")  
         if not refresh_token:
             return Response({"error": "Refresh token required"}, status=400)
 
-        print("Received Refresh Token:", refresh_token)  # Debugging
-
         token = RefreshToken(refresh_token)
         token.blacklist()  # Blacklist the token
-
         return Response({"message": "Successfully logged out"}, status=200)
-    except Exception as e:
-        print("Logout Error:", str(e))  # Debugging
+    
+    except Exception:
         return Response({"error": "Invalid token"}, status=400)
     
 

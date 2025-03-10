@@ -1,13 +1,18 @@
+from django.shortcuts import get_object_or_404
+from django.db.models import Q  # For searching
+
+
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 
-from django.shortcuts import get_object_or_404
 
 from core.models import Category, Product, Cart, Order, OrderItem, User, Review
-from api.v1.core.serializers import CategorySerializer, ProductSerializer, CartSerializer
-from api.v1.core.serializers import OrderSerializer, OrderItemSerializer, ReviewSerializer
+from api.v1.core.serializers import (
+    CategorySerializer, ProductSerializer, CartSerializer, 
+    OrderSerializer, OrderItemSerializer, ReviewSerializer
+)
 from api.v1.auth.serializers import UserSerializer
 
 
@@ -62,9 +67,6 @@ def category_detail(request, category_id):
         return Response({"message": "Category deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
-
-# PRODUCT VIEWS
-from django.db.models import Q  # For searching
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -249,14 +251,12 @@ def order_detail(request, order_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def track_order_status(request, order_id):
     """Retrieve order status"""
     order = get_object_or_404(Order, id=order_id, user=request.user)
     return Response({"order_id": order.id, "status": order.status}, status=status.HTTP_200_OK)
-
 
 
 #admin
@@ -324,7 +324,7 @@ def list_users(request):
     if not request.user.is_staff:
         return Response({"error": "Only admins can view users"}, status=status.HTTP_403_FORBIDDEN)
 
-    users = User.objects.all()
+    users = User.objects.filter(is_staff=False)
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
